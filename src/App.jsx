@@ -3,7 +3,10 @@ import { useState, useRef, useEffect } from 'react'
 import './App.css'
 
 function App() {
-  const [todos, setTodos] = useState([])
+  const [todos, setTodos] = useState(() => {
+    const saved = localStorage.getItem('todos')
+    return saved ? JSON.parse(saved) : []
+  })
 
   const [filterStage, setFilterStage] = useState('all')
   const [filterDeadline, setFilterDeadline] = useState('anydeadline')
@@ -11,7 +14,12 @@ function App() {
 
   const dragItem = useRef(null)
   const [draggingId, setDraggingId] = useState(null)
-
+  
+  
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos))
+  }, [todos])
+  
   const handleDragStart = (id) => {
     dragItem.current = id
     setDraggingId(id)
