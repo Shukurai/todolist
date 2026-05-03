@@ -1,0 +1,328 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto+Mono:ital,wght@0,401;1,401&family=Roboto:ital,wght@0,100..900;1,100..900&family=VT323&display=swap');
+:root {
+  --text-color: #fff;
+  --background-color: #1f1f1e;
+  --bgcard-color: #252524;
+  --headercard-color: #292928;
+  --border-color: #313131;
+  --important-color: #e64b4b;
+  --accept-color: #4be64b;
+  --textarea-color: #1f1f1e;
+  --date-color: #e39e59;
+}
+*{
+  font-family: inherit;
+}
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  display: grid;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
+
+  font-family: "VT323", monospace;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+}
+
+header {
+  grid-area: header;
+  padding: 1rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  *{
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap : 0.5rem;
+  }
+}
+header .TodoInput {
+  margin-left: auto;
+}
+
+main {
+  grid-area: main;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.TodoList {
+  display: grid;
+  padding: 10px 28px;
+  align-items: start;
+  gap: 1rem;
+}
+
+.TodoList li {
+  list-style: none;
+  max-width: 400px;
+  background-color: var(--bgcard-color);
+  border: 1px solid var(--border-color);
+  padding: 0;
+  border-radius: 0px 0px 20px 20px;
+  transition: all 0.3s ease;
+}
+
+.TodoList li.dragging {
+  opacity: 0.4;
+  transform: scale(0.88);
+  background-color: #7a4545;
+}
+
+.TodoList .CardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0.5rem;
+  background-color: var(--headercard-color);
+  cursor: grab;
+
+}
+
+.icon-picker {
+  display: flex;
+  margin-left: 20px;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.CardHeader:active {
+  cursor: grabbing;
+}
+.CardHeader .todo-text {
+  flex: 1;
+  text-align: center;
+  margin: 0;
+  letter-spacing: 1.5px;
+}
+.card-inner{
+  padding: 1rem;
+}
+.priority-edit{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 20px 10px;
+}
+.deadline-edit{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 20px 10px;
+}
+.CardHeader .todo-checkbox {
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  border: 1px solid var(--accept-color);
+  background-color: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.CardHeader input[type="checkbox"] {
+  display: none;
+}
+.CardHeader input[type="checkbox"]:checked+.todo-checkbox {
+  background-color: var(--accept-color);
+}
+.TodoInput form{
+  display: flex;
+  gap: 0.5rem;
+  
+}
+.TodoInput form input {
+  width: 200px;
+  background-color: var(--textarea-color);
+  border: 1px solid #cfcfcf;
+  border-radius: 4px;
+  padding: 0.5rem;
+  color: var(--text-color);
+  font-size: 20px;
+}
+.TodoInput form button {
+  background-color: var(--textarea-color);
+  border: 1px solid #cfcfcf;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: 0.2s all ease;
+  font-size: 20px;
+}
+.TodoInput form button:hover {
+  background-color: var(--border-color);
+}
+.CloseBtn {
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--important-color);
+  border-radius: 8px;
+  background-color: transparent;
+  color: var(--important-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: 0.2s all ease;
+}
+
+.CloseBtn:hover {
+  background-color: var(--important-color);
+  color: var(--text-color);
+}
+.reset-filter-button{
+  background-color: var(--textarea-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: 0.2s all ease;
+  font-size: 20px;
+}
+.reset-filter-button:hover{
+  background-color: var(--border-color);
+}
+.EditBtn {
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--accept-color);
+  border-radius: 8px;
+  background-color: transparent;
+  color: var(--accept-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: 0.2s all ease;
+}
+
+.EditBtn:hover {
+  background-color: var(--accept-color);
+  color: var(--text-color);
+}
+
+
+.TodoList .comment-container{
+  display: flex;
+  gap: 0.5rem;
+}
+
+.TodoList .date-text{
+  color: var(--date-color);
+}
+
+.todo-edit-input{
+  width: 150px;
+  background-color: var(--textarea-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 0.5rem;
+  color: var(--text-color);
+}
+.filter{
+  
+  select{
+    background-color: var(--textarea-color);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 0.5rem;
+    color: var(--text-color);
+    font-size: 20px;
+  }
+}
+.edit-container{
+  margin-top: 20px;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 0px;
+
+  select{
+    width: 100%;
+    background-color: var(--textarea-color);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 0.5rem;
+    color: var(--text-color);
+  }
+  input[type="date"]{
+    width: 93%;
+    background-color: var(--textarea-color);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 0.5rem;
+    color: var(--text-color);
+  }
+}
+
+.TodoList .comment-container textarea{
+  width: 100%;
+  height: 60px;
+  background-color: var(--textarea-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 0.5rem;
+  color: var(--text-color);
+  min-width: 350px;
+  min-height: fit-content;
+  font-size: 20px;
+}
+
+/* Сам ползунок (трек) */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: var(--border-color);
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Заполненная часть — только Chrome/Safari */
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 4px;
+  background: var(--border-color);
+}
+
+/* Кружок */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accept-color);
+  cursor: pointer;
+  margin-top: -6px;
+}
+
+/* Firefox */
+input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accept-color);
+  border: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-track {
+  height: 4px;
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
