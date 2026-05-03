@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto+Mono:ital,wght@0,401;1,401&family=Roboto:ital,wght@0,100..900;1,100..900&family=VT323&display=swap');
+
 :root {
   --text-color: #fff;
   --background-color: #1f1f1e;
@@ -10,9 +11,11 @@
   --textarea-color: #1f1f1e;
   --date-color: #e39e59;
 }
-*{
+
+* {
   font-family: inherit;
 }
+
 body {
   background-color: var(--background-color);
   color: var(--text-color);
@@ -21,7 +24,6 @@ body {
     "header"
     "main"
     "footer";
-
   font-family: "VT323", monospace;
   font-weight: 400;
   font-style: normal;
@@ -35,14 +37,15 @@ header {
   display: flex;
   align-items: center;
   gap: 2rem;
-  *{
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap : 0.5rem;
-  }
 }
+
+header * {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 header .TodoInput {
   margin-left: auto;
 }
@@ -72,10 +75,31 @@ main {
   transition: all 0.3s ease;
 }
 
-.TodoList li.dragging {
-  opacity: 0.4;
-  transform: scale(0.88);
-  background-color: #7a4545;
+.TodoList li.dragging-origin {
+  opacity: 0.3;
+  transform: scale(0.95);
+}
+
+.TodoList li.drag-over {
+  transform: scale(1.02);
+  box-shadow: 0 0 0 2px var(--accept-color);
+}
+
+.drag-ghost-wrapper {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.drag-ghost {
+  background-color: var(--bgcard-color);
+  border: 1px solid var(--border-color);
+  border-radius: 0px 0px 20px 20px;
+  transition: none !important;
+}
+
+.drag-ghost .CardHeader {
+  cursor: grabbing !important;
 }
 
 .TodoList .CardHeader {
@@ -86,40 +110,19 @@ main {
   padding: 0.5rem;
   background-color: var(--headercard-color);
   cursor: grab;
-
-}
-
-.icon-picker {
-  display: flex;
-  margin-left: 20px;
-  flex-wrap: wrap;
-  gap: 4px;
 }
 
 .CardHeader:active {
   cursor: grabbing;
 }
+
 .CardHeader .todo-text {
   flex: 1;
   text-align: center;
   margin: 0;
   letter-spacing: 1.5px;
 }
-.card-inner{
-  padding: 1rem;
-}
-.priority-edit{
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 20px 10px;
-}
-.deadline-edit{
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 20px 10px;
-}
+
 .CardHeader .todo-checkbox {
   width: 24px;
   height: 24px;
@@ -129,17 +132,60 @@ main {
   cursor: pointer;
   flex-shrink: 0;
 }
+
 .CardHeader input[type="checkbox"] {
   display: none;
 }
+
 .CardHeader input[type="checkbox"]:checked+.todo-checkbox {
   background-color: var(--accept-color);
 }
-.TodoInput form{
+
+.card-inner {
+  padding: 1rem;
+}
+
+.priority-edit {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 20px 10px;
+}
+
+.deadline-edit {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 20px 10px;
+}
+
+.icon-picker {
+  display: flex;
+  margin-left: 20px;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.icon-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 4px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: background 0.2s;
+}
+
+.icon-btn.selected {
+  border-color: var(--accept-color);
+  background: rgba(75, 230, 75, 0.1);
+}
+
+.TodoInput form {
   display: flex;
   gap: 0.5rem;
-  
 }
+
 .TodoInput form input {
   width: 200px;
   background-color: var(--textarea-color);
@@ -149,6 +195,7 @@ main {
   color: var(--text-color);
   font-size: 20px;
 }
+
 .TodoInput form button {
   background-color: var(--textarea-color);
   border: 1px solid #cfcfcf;
@@ -159,9 +206,11 @@ main {
   transition: 0.2s all ease;
   font-size: 20px;
 }
+
 .TodoInput form button:hover {
   background-color: var(--border-color);
 }
+
 .CloseBtn {
   width: 24px;
   height: 24px;
@@ -181,19 +230,7 @@ main {
   background-color: var(--important-color);
   color: var(--text-color);
 }
-.reset-filter-button{
-  background-color: var(--textarea-color);
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  padding: 0.5rem 1rem;
-  color: var(--text-color);
-  cursor: pointer;
-  transition: 0.2s all ease;
-  font-size: 20px;
-}
-.reset-filter-button:hover{
-  background-color: var(--border-color);
-}
+
 .EditBtn {
   width: 24px;
   height: 24px;
@@ -214,17 +251,39 @@ main {
   color: var(--text-color);
 }
 
-
-.TodoList .comment-container{
-  display: flex;
-  gap: 0.5rem;
+.SaveBtn {
+  background-color: transparent;
+  border: 1px solid var(--accept-color);
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  color: var(--accept-color);
+  cursor: pointer;
+  transition: 0.2s all ease;
+  font-size: 20px;
+  margin: 10px;
 }
 
-.TodoList .date-text{
-  color: var(--date-color);
+.SaveBtn:hover {
+  background-color: var(--accept-color);
+  color: var(--text-color);
 }
 
-.todo-edit-input{
+.reset-filter-button {
+  background-color: var(--textarea-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: 0.2s all ease;
+  font-size: 20px;
+}
+
+.reset-filter-button:hover {
+  background-color: var(--border-color);
+}
+
+.todo-edit-input {
   width: 150px;
   background-color: var(--textarea-color);
   border: 1px solid var(--border-color);
@@ -232,42 +291,47 @@ main {
   padding: 0.5rem;
   color: var(--text-color);
 }
-.filter{
-  
-  select{
-    background-color: var(--textarea-color);
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    padding: 0.5rem;
-    color: var(--text-color);
-    font-size: 20px;
-  }
+
+.filter select {
+  background-color: var(--textarea-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 0.5rem;
+  color: var(--text-color);
+  font-size: 20px;
 }
-.edit-container{
+
+.edit-container {
   margin-top: 20px;
   display: flex;
   flex-flow: column nowrap;
   gap: 0px;
-
-  select{
-    width: 100%;
-    background-color: var(--textarea-color);
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    padding: 0.5rem;
-    color: var(--text-color);
-  }
-  input[type="date"]{
-    width: 93%;
-    background-color: var(--textarea-color);
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    padding: 0.5rem;
-    color: var(--text-color);
-  }
 }
 
-.TodoList .comment-container textarea{
+.edit-container select {
+  width: 100%;
+  background-color: var(--textarea-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 0.5rem;
+  color: var(--text-color);
+}
+
+.edit-container input[type="date"] {
+  width: 93%;
+  background-color: var(--textarea-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 0.5rem;
+  color: var(--text-color);
+}
+
+.TodoList .comment-container {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.TodoList .comment-container textarea {
   width: 100%;
   height: 60px;
   background-color: var(--textarea-color);
@@ -280,7 +344,10 @@ main {
   font-size: 20px;
 }
 
-/* Сам ползунок (трек) */
+.TodoList .date-text {
+  color: var(--date-color);
+}
+
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
@@ -291,14 +358,12 @@ input[type="range"] {
   cursor: pointer;
 }
 
-/* Заполненная часть — только Chrome/Safari */
 input[type="range"]::-webkit-slider-runnable-track {
   height: 4px;
   border-radius: 4px;
   background: var(--border-color);
 }
 
-/* Кружок */
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -310,7 +375,6 @@ input[type="range"]::-webkit-slider-thumb {
   margin-top: -6px;
 }
 
-/* Firefox */
 input[type="range"]::-moz-range-thumb {
   width: 16px;
   height: 16px;
@@ -325,4 +389,3 @@ input[type="range"]::-moz-range-track {
   background: var(--border-color);
   border-radius: 4px;
 }
-
