@@ -389,3 +389,65 @@ input[type="range"]::-moz-range-track {
   background: var(--border-color);
   border-radius: 4px;
 }
+@media (max-width: 600px) {
+  body {
+    font-size: 18px;
+  }
+
+  header {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem 0.5rem;
+  }
+
+  header .TodoInput {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .columns-control {
+    display: none;
+  }
+
+  .filter {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem !important;
+  }
+
+  .TodoInput form {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .TodoInput form input {
+    flex: 1;
+    width: auto;
+    max-width: 280px;
+  }
+
+  .TodoList {
+    grid-template-columns: 1fr !important;
+    padding: 10px;
+    justify-items: center;
+    width: 100%;
+  }
+
+  .TodoList li {
+    width: 100%;
+    max-width: 360px;
+  }
+
+  .TodoList .comment-container textarea {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .todo-edit-input {
+    width: 100%;
+  }
+
+  .edit-container input[type="date"] {
+    width: 100%;
+  }
+}

@@ -13,7 +13,7 @@ function App() {
   const [dragging, setDragging] = useState(null) // { id, x, y, offsetX, offsetY }
   const [dragOverId, setDragOverId] = useState(null)
 
-  const getMaxColumns = () => Math.floor(window.innerWidth / 400)
+  const getMaxColumns = () => Math.max(1, Math.floor(window.innerWidth / 400))
   const [columns, setColumns] = useState(getMaxColumns())
 
   useEffect(() => {
